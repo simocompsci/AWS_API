@@ -1,7 +1,8 @@
 package com.example.mangaApi.Manga;
 
-import java.util.List;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,18 +20,14 @@ public class MangaController {
         this.mangaService = mangaService;
     }
 
-    @GetMapping("/topRated")
-    public ResponseEntity<List<MangaListResponse>> getTopRatedManga(@RequestParam Integer page) {
-        List<MangaListResponse> mangas = mangaService.getTopRatedManga(page);
-        return ResponseEntity.ok(mangas);
+    @GetMapping("/")
+    public ResponseEntity<Page<MangaListResponse>> getAllManga(@RequestParam(defaultValue = "0") int page) {
+        
+        Pageable pageable = PageRequest.of(page, 10);
 
-    }
+        Page<MangaListResponse> manga = mangaService.getAllManga(pageable);
 
-    @GetMapping("/popular")
-    public ResponseEntity<List<MangaListResponse>> getPopularManga(@RequestParam Integer page) {
-        List<MangaListResponse> mangas = mangaService.getPopularManga(page);
-        return ResponseEntity.ok(mangas);
-
+        return ResponseEntity.ok(manga);
     }
 
     @GetMapping("/search")

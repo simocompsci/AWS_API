@@ -1,5 +1,7 @@
 package com.example.mangaApi.DTO;
 
+import java.util.UUID;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,7 +12,7 @@ import lombok.NoArgsConstructor;
 
 public class MangaListResponse {
 
-    private Integer id;
+    private UUID id;
     private Integer malId;
     private String mangaName;
     private String coverImage;

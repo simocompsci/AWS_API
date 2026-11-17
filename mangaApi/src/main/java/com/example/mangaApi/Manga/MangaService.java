@@ -3,6 +3,7 @@ package com.example.mangaApi.Manga;
 import java.util.List;
 
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
@@ -21,17 +22,15 @@ public class MangaService {
         this.objectMapper = objectMapper;
     }
 
-    public List<MangaListResponse> getTopRatedManga(Pageable pageable) {
+    public Page<MangaListResponse> getAllManga(Pageable pageable) {
 
-        if (pageable.getPageSize() > 100) {
-            pageable = PageRequest.of(pageable.getPageNumber(), 100, pageable.getSort());
-        }
+        return mangaRepository.findAll(pageable)
+                .map(manga -> new MangaListResponse(
+                        manga.getId(),
+                        manga.getMalId(),
+                        manga.getRomajiTitle(),
+                        manga.getCoverImage()));
 
-        return mangaRepository.findAll().map(MangaListResponse::from);
-
-    }
-
-    public List<MangaListResponse> getPopularManga(Pageable pageable) {
     }
 
     public SearchResponse searchManga(String title) {
