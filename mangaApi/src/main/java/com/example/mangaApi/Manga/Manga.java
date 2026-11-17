@@ -31,9 +31,6 @@ public class Manga {
     @Column(name = "mal_id")
     private Integer malId;
 
-    // @Column(nullable = false, unique = true)
-    // private String slug;
-
     @Column(name = "romaji_title", nullable = false)
     private String romajiTitle;
 
@@ -78,8 +75,6 @@ public class Manga {
     @Column(name = "banner_image", columnDefinition = "TEXT")
     private String bannerImage;
 
-    // @Column(name = "site_url", columnDefinition = "TEXT")
-    // private String siteUrl;
 
     @JdbcTypeCode(SqlTypes.JSON)
     @Column(name = "extra_data", columnDefinition = "jsonb")
