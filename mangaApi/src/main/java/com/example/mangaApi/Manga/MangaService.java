@@ -2,6 +2,8 @@ package com.example.mangaApi.Manga;
 
 import java.util.List;
 
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.example.mangaApi.DTO.MangaListResponse;
@@ -14,15 +16,22 @@ public class MangaService {
     private final MangaRepository mangaRepository;
     private final ObjectMapper objectMapper;
 
-    public MangaService(MangaRepository mangaRepository , ObjectMapper objectMapper) {
+    public MangaService(MangaRepository mangaRepository, ObjectMapper objectMapper) {
         this.mangaRepository = mangaRepository;
         this.objectMapper = objectMapper;
     }
 
-    public List<MangaListResponse> getTopRatedManga(Integer page) {
+    public List<MangaListResponse> getTopRatedManga(Pageable pageable) {
+
+        if (pageable.getPageSize() > 100) {
+            pageable = PageRequest.of(pageable.getPageNumber(), 100, pageable.getSort());
+        }
+
+        return mangaRepository.findAll().map(MangaListResponse::from);
+
     }
 
-    public List<MangaListResponse> getPopularManga(Integer page) {
+    public List<MangaListResponse> getPopularManga(Pageable pageable) {
     }
 
     public SearchResponse searchManga(String title) {
