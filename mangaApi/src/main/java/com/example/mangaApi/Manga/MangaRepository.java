@@ -1,5 +1,11 @@
 package com.example.mangaApi.Manga;
 
-public class MangaRepository {
-    
+import java.util.UUID;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+
+public interface MangaRepository extends JpaRepository<Manga, UUID> {
+
+    Manga findFirstByRomajiTitleIgnoreCase(String title);
 }
