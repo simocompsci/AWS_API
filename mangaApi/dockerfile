@@ -18,7 +18,7 @@ WORKDIR /app
 RUN addgroup -S spring && adduser -S spring -G spring
 
 # Copy Spring Boot JAR
-COPY --from=build /app/target/backend-*.jar app.jar
+COPY --from=build /app/target/app.jar /app/app.jar
 
 # Copy AWS RDS CA certificate
 RUN mkdir -p /app/certs
@@ -30,4 +30,4 @@ USER spring:spring
 
 EXPOSE 8081
 
-ENTRYPOINT ["java", "-XX:MaxRAMPercentage=75.0", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-XX:MaxRAMPercentage=75.0", "-jar", "/app/app.jar"]
