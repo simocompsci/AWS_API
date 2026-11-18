@@ -25,7 +25,7 @@ public class MangaController {
     @GetMapping("/")
     public ResponseEntity<Page<MangaListResponse>> getAllManga(@RequestParam(defaultValue = "0") int page) {
 
-        Pageable pageable = PageRequest.of(page, 10);
+        Pageable pageable = PageRequest.of(page, 50);
 
         Page<MangaListResponse> manga = mangaService.getAllManga(pageable);
 
